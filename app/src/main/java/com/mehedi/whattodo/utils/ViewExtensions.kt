@@ -33,8 +33,6 @@ fun TextView.showChar(
             text = "${msg.length} char"
         }
     }
-    
-    
 }
 
 fun View.visible() {
