@@ -18,29 +18,39 @@
         android:orientation="vertical">
 
         <EditText
-            android:text="@={viewmodel.title}"
             android:id="@+id/add_task_title_edt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            android:hint="@string/title_hint" />
+            android:hint="@string/title_hint"
+            android:text="@={viewmodel.title}" />
+
+        <TextView
+            android:id="@+id/warning_text_task_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="-16dp"
+            android:text="8 char"
+            android:textColor="#FF5722"
+            android:visibility="invisible" />
 
 
         <EditText
-            android:text="@={viewmodel.description}"
             android:id="@+id/add_task_description_edt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            android:hint="@string/description_hint" />
+            android:hint="@string/description_hint"
+            android:text="@={viewmodel.description}" />
 
 
         <androidx.appcompat.widget.AppCompatButton
-            android:onClick="@{()-> viewmodel.saveTask()}"
             android:id="@+id/save_task_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
+            android:onClick="@{()-> viewmodel.saveTask()}"
             android:text="@string/add_task" />
 
 

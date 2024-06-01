@@ -7,8 +7,11 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.google.android.material.snackbar.Snackbar
 import com.mehedi.whattodo.R
 import com.mehedi.whattodo.databinding.FragmentAddTaskBinding
+import com.mehedi.whattodo.utils.showChar
+import com.mehedi.whattodo.utils.showSnackbar
 
 
 class AddTaskFragment : Fragment() {
@@ -27,7 +30,31 @@ class AddTaskFragment : Fragment() {
         binding.viewmodel = viewModel
         binding.lifecycleOwner = this.viewLifecycleOwner
         
+        
         return binding.root
+    }
+    
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        
+        bindSnackBar(view)
+        bindUiMessage()
+        
+    }
+    
+    private fun bindUiMessage() {
+        binding.warningTextTaskTitle.showChar(lifecycleOwner = viewLifecycleOwner, viewModel.title)
+        
+    }
+    
+    private fun bindSnackBar(view: View) {
+        
+        
+        view.showSnackbar(
+            lifecycleOwner = viewLifecycleOwner,
+            viewModel.snackbarMsg,
+            Snackbar.LENGTH_LONG
+        )
     }
     
     
