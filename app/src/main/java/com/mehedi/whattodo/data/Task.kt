@@ -7,8 +7,8 @@ import androidx.room.PrimaryKey
 data class Task(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
-    val title: String,
-    val description: String,
+    val title: String?= null,
+    val description: String? = null,
     val isCompleted: Boolean = false
 ) {
     
@@ -16,7 +16,7 @@ data class Task(
         get() = !isCompleted
     
     val isEmpty
-        get() = title.isEmpty() || description.isEmpty()
+        get() = title?.isEmpty() == true || description?.isEmpty() == true
     
     
 }

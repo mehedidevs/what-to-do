@@ -21,7 +21,8 @@ class AddTaskFragment : Fragment() {
     private val viewModel by viewModels<AddTaskViewModel>()
     
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
@@ -29,10 +30,58 @@ class AddTaskFragment : Fragment() {
             DataBindingUtil.inflate(layoutInflater, R.layout.fragment_add_task, container, false)
         binding.viewmodel = viewModel
         binding.lifecycleOwner = this.viewLifecycleOwner
-        
-        
         return binding.root
+        
     }
+    
+    //   private fun addTask() {
+//        binding.addTaskTitleEdt.addTextChangedListener(object : TextWatcher {
+//            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+//
+//            }
+//
+//            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+//
+//
+//            }
+//
+//            override fun afterTextChanged(p0: Editable?) {
+//
+//            }
+//        })
+//
+//        binding.addTaskDescriptionEdt.addTextChangedListener(object : TextWatcher {
+//            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+//
+//            }
+//
+//            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+//
+//                binding.warningTextTaskDescription.text = "${p0?.length}"
+//            }
+//
+//            override fun afterTextChanged(p0: Editable?) {
+//
+//            }
+//        })
+//
+//
+//
+//        binding.saveTaskBtn.setOnClickListener {
+//            val title = binding.addTaskTitleEdt.text.toString().trim()
+//            val description = binding.addTaskDescriptionEdt.text.toString().trim()
+//            val task = Task(title = title, description = description)
+//            //validation
+//
+//
+//            viewModel.saveTask()
+//
+//
+//        }
+//
+//
+//    }
+//
     
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -43,15 +92,13 @@ class AddTaskFragment : Fragment() {
     }
     
     private fun bindUiMessage() {
-        binding.warningTextTaskTitle.showChar(lifecycleOwner = viewLifecycleOwner, viewModel.title)
-        
+        binding.warningTextTaskTitle.showChar(viewLifecycleOwner, viewModel.title)
     }
     
     private fun bindSnackBar(view: View) {
         
-        
         view.showSnackbar(
-            lifecycleOwner = viewLifecycleOwner,
+            viewLifecycleOwner,
             viewModel.snackbarMsg,
             Snackbar.LENGTH_LONG
         )
