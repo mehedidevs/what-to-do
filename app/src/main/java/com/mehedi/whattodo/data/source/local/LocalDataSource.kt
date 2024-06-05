@@ -1,5 +1,6 @@
 package com.mehedi.whattodo.data.source.local
 
+import androidx.lifecycle.LiveData
 import com.mehedi.whattodo.data.Task
 import com.mehedi.whattodo.data.source.TasksDataSource
 import kotlinx.coroutines.CoroutineDispatcher
@@ -14,6 +15,11 @@ class LocalDataSource(
         withContext(ioDispatcher) {
             dao.insertTask(task)
         }
+    }
+    
+    override fun getAllTAsk(): LiveData<List<Task>> {
+        return dao.getAllTask()
+        
     }
     
     

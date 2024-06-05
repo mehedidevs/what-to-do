@@ -3,13 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph.xml"
-    app:startDestination="@id/addTaskFragment">
+    app:startDestination="@id/tasks_fragment_dest">
 
     <fragment
         android:id="@+id/tasks_fragment_dest"
-        android:name="com.mehedi.whattodo.TaskFragment"
+        android:name="com.mehedi.whattodo.tasks.TaskFragment"
         android:label="Task"
-        tools:layout="@layout/fragment_task" />
+        tools:layout="@layout/fragment_task" >
+        <action
+            android:id="@+id/action_tasks_fragment_dest_to_addTaskFragment"
+            app:destination="@id/addTaskFragment" />
+    </fragment>
     <fragment
         android:id="@+id/statistics_fragment_dest"
         android:name="com.mehedi.whattodo.StatisticsFragment"

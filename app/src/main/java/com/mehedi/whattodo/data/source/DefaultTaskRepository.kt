@@ -47,5 +47,7 @@ class DefaultTaskRepository private constructor(application: Application) {
         }
     }
     
+    fun getAllTask() = localDataSource.getAllTAsk()
+    
     
 }
