@@ -11,10 +11,13 @@ import com.mehedi.whattodo.data.Task
 interface TaskDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertTask(task: Task)
-    
+
 
     @Query("SELECT * FROM TASK_TABLE")
     fun getAllTask(): LiveData<List<Task>>
-    
-    
+
+    @Query("SELECT * FROM task_table WHERE id= :id")
+    fun getTaskId(id: Int): LiveData<Task>
+
+
 }

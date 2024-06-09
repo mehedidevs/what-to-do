@@ -16,11 +16,15 @@ class LocalDataSource(
             dao.insertTask(task)
         }
     }
-    
+
     override fun getAllTAsk(): LiveData<List<Task>> {
         return dao.getAllTask()
-        
+
     }
-    
-    
+
+    override fun getTaskById(id: Int): LiveData<Task> {
+        return dao.getTaskId(id)
+    }
+
+
 }
