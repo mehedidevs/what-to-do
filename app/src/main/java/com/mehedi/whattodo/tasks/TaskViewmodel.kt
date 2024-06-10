@@ -12,12 +12,8 @@ class TaskViewmodel(application: Application) : AndroidViewModel(application) {
     
     val getAllTask = repository.getAllTask()
 
-    private val _openTaskEvent = MutableLiveData<Int>()
-    val openTaskEvent: LiveData<Int>
-        get() = _openTaskEvent
 
-    fun openTask(id: Int) {
-        _openTaskEvent.postValue(id)
-    }
+
+
     
 }

@@ -34,61 +34,22 @@ class AddTaskFragment : Fragment() {
         binding.viewmodel = viewModel
         binding.lifecycleOwner = this.viewLifecycleOwner
 
-        viewModel.getTaskById(args.taskId, viewLifecycleOwner)
+        viewModel.getTaskById(args.taskId)?.let { taskObserver ->
+            taskObserver.observe(viewLifecycleOwner) {
+                it?.let { task ->
+                    viewModel.title.postValue(task.title.toString())
+                    viewModel.description.postValue(task.description.toString())
+                }
+
+            }
+
+        }
+
 
 
         return binding.root
 
     }
-
-    //   private fun addTask() {
-//        binding.addTaskTitleEdt.addTextChangedListener(object : TextWatcher {
-//            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-//
-//            }
-//
-//            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-//
-//
-//            }
-//
-//            override fun afterTextChanged(p0: Editable?) {
-//
-//            }
-//        })
-//
-//        binding.addTaskDescriptionEdt.addTextChangedListener(object : TextWatcher {
-//            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-//
-//            }
-//
-//            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-//
-//                binding.warningTextTaskDescription.text = "${p0?.length}"
-//            }
-//
-//            override fun afterTextChanged(p0: Editable?) {
-//
-//            }
-//        })
-//
-//
-//
-//        binding.saveTaskBtn.setOnClickListener {
-//            val title = binding.addTaskTitleEdt.text.toString().trim()
-//            val description = binding.addTaskDescriptionEdt.text.toString().trim()
-//            val task = Task(title = title, description = description)
-//            //validation
-//
-//
-//            viewModel.saveTask()
-//
-//
-//        }
-//
-//
-//    }
-//
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

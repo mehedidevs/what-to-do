@@ -47,6 +47,13 @@ class DefaultTaskRepository private constructor(application: Application) {
         }
     }
 
+    suspend fun updateTask(task: Task) {
+        withContext(ioDispatcher) {
+            localDataSource.updateTask(task)
+        }
+    }
+
+
     fun getAllTask() = localDataSource.getAllTAsk()
     fun getTaskById(id: Int) = localDataSource.getTaskById(id)
 

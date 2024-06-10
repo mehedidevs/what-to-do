@@ -60,7 +60,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:onClick="@{()-> viewmodel.saveTask()}"
-            android:text="@string/add_task" />
+            android:text="@{viewmodel.btnName}" />
 
 
     </LinearLayout>

@@ -5,9 +5,10 @@ import com.mehedi.whattodo.data.Task
 
 interface TasksDataSource {
     suspend fun saveTask(task: Task)
+    suspend fun updateTask(task: Task)
 
     fun getAllTAsk(): LiveData<List<Task>>
 
-    fun getTaskById(id: Int): LiveData<Task>
+    fun getTaskById(id: Int): LiveData<Task>?
 
 }

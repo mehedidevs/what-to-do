@@ -17,12 +17,18 @@ class LocalDataSource(
         }
     }
 
+    override suspend fun updateTask(task: Task) {
+      withContext(ioDispatcher){
+          dao.updateTask(task)
+      }
+    }
+
     override fun getAllTAsk(): LiveData<List<Task>> {
         return dao.getAllTask()
 
     }
 
-    override fun getTaskById(id: Int): LiveData<Task> {
+    override fun getTaskById(id: Int): LiveData<Task>? {
         return dao.getTaskId(id)
     }
 

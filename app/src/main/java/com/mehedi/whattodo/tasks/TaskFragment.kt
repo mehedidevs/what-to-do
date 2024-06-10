@@ -17,6 +17,8 @@ class TaskFragment : Fragment() {
     private val viewModel by viewModels<TaskViewmodel>()
 
     private lateinit var adapter: TaskAdapter
+
+    private val isEditClicked = false
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -28,21 +30,10 @@ class TaskFragment : Fragment() {
         setTaskAdapter()
         setUpNavigation()
 
-
-
-
         return binding.root
     }
 
     private fun setUpNavigation() {
-        viewModel.openTaskEvent.observe(viewLifecycleOwner) {
-            val action = TaskFragmentDirections.actionTasksFragmentDestToAddTaskFragment(it)
-            findNavController().navigate(action)
-
-
-        }
-
-
         binding.btnAddTask.setOnClickListener {
             findNavController().navigate(R.id.action_tasks_fragment_dest_to_addTaskFragment)
         }
@@ -51,7 +42,12 @@ class TaskFragment : Fragment() {
     private fun setTaskAdapter() {
         val viewmodel = binding.taskViewmodel
         if (viewmodel != null) {
-            adapter = TaskAdapter(viewmodel)
+            adapter = TaskAdapter(viewmodel) { task ->
+                val action =
+                    TaskFragmentDirections.actionTasksFragmentDestToAddTaskFragment(task.id)
+                findNavController().navigate(action)
+
+            }
             binding.taskList.adapter = adapter
         }
 

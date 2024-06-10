@@ -14,6 +14,7 @@ import kotlinx.coroutines.launch
 
 class AddTaskViewModel(private val application: Application) : AndroidViewModel(application) {
 
+    val btnName = MutableLiveData<String>()
     val title = MutableLiveData<String>()
     val description = MutableLiveData<String>()
     private val repository: DefaultTaskRepository = DefaultTaskRepository.getInstance(application)
@@ -23,37 +24,55 @@ class AddTaskViewModel(private val application: Application) : AndroidViewModel(
         get() = _snackbarMsg
 
     private val titleLength = 6
+    private val noTaskId = 0
+    private var currentTaskId = noTaskId
 
-    val _editableTask = MutableLiveData<Task>()
-    val editableTask: LiveData<Task>
-        get() = _editableTask
-
-
-    fun getTaskById(id: Int, lifecycleOwner: LifecycleOwner) {
-        repository.getTaskById(id).observe(lifecycleOwner) {
-            title.postValue(it.title!!)
-            description.postValue(it.description!!)
-
-        }
-
-
+    init {
+        btnName.postValue("Create Task")
     }
 
+    fun getTaskById(id: Int): LiveData<Task>? {
+        updateCurrentTaskId(id)
+        changeBtnName()
+        return repository.getTaskById(id)
+    }
+
+    private fun updateCurrentTaskId(id: Int) {
+        currentTaskId = id
+    }
+
+    private fun changeBtnName() {
+        if (currentTaskId != noTaskId) {
+            btnName.postValue("Update Task")
+        }
+
+    }
 
     fun saveTask() {
         val currentTitle = title.value
         val currentDescription = description.value
 
         val task = Task(
-            title = currentTitle.toTimedString(), description = currentDescription.toTimedString()
+            id = currentTaskId,
+            title = currentTitle.toTimedString(),
+            description = currentDescription.toTimedString()
         )
 
-        if (isValidTask(task)) {
-            createTask(task)
+
+        if (!isValidTask(task)) {
+            return
         }
+
+        if (currentTaskId == noTaskId) {
+            createTask(task)
+        } else {
+            updateTask(task)
+        }
+
     }
 
     private fun isValidTask(task: Task): Boolean {
+
 
         if (task.title.isNullOrEmpty() || task.description.isNullOrEmpty()) {
             _snackbarMsg.postValue(R.string.empty_task_message)
@@ -72,6 +91,13 @@ class AddTaskViewModel(private val application: Application) : AndroidViewModel(
     private fun createTask(task: Task) {
         viewModelScope.launch {
             repository.saveTask(task)
+        }
+
+    }
+
+    private fun updateTask(task: Task) {
+        viewModelScope.launch {
+            repository.updateTask(task)
         }
 
     }
